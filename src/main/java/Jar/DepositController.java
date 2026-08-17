@@ -13,39 +13,46 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class DepositController {
 
-	private UserDAO userDAO = new UserDAO();
+	private final UserDAO userDAO = new UserDAO();
 
 	@GetMapping("/deposit")
 	public String showDepositPage(HttpSession session, Model model) {
 
-	    Integer userId = (Integer) session.getAttribute("userId");
+		Integer userId = (Integer) session.getAttribute("userId");
 
-	    if (userId == null) {
-	        return "redirect:/login";
-	    }
+		if (userId == null) {
+			return "redirect:/login";
+		}
 
-	    model.addAttribute("userId", userId);
+		model.addAttribute("userId", userId);
 
-	    return "deposit";
+		return "deposit";
 	}
 
 	@PostMapping("/deposit")
-	public String depositMoney(
-	        @RequestParam int userId,
-	        @RequestParam double amount,
-	        @RequestParam String method) {
+	public String depositMoney(@RequestParam double amount, @RequestParam String method, HttpSession session,
+			Model model) {
 
-	    System.out.println("DEPOSIT REQUEST RECEIVED");
-	    System.out.println("User ID: " + userId);
-	    System.out.println("Amount: " + amount);
-	    System.out.println("Method: " + method);
+		Integer userId = (Integer) session.getAttribute("userId");
 
-	    boolean success = userDAO.depositMoney(userId, amount, method);
+		if (userId == null) {
+			return "redirect:/login";
+		}
 
-	    if (success) {
-	        return "deposit-success";
-	    }
+		if (amount <= 0) {
+			model.addAttribute("error", "Please enter a valid deposit amount.");
+			return "deposit";
+		}
 
-	    return "deposit";
+		boolean success = userDAO.depositMoney(userId, amount, method);
+
+		if (success) {
+			model.addAttribute("amount", amount);
+			model.addAttribute("method", method);
+			return "deposit-success";
+		}
+
+		model.addAttribute("error", "Deposit failed. Please try again.");
+		return "deposit";
 	}
 }

@@ -2,12 +2,16 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>SecureBank - Dashboard</title>
 
     <style>
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -20,7 +24,8 @@
             color: #1f2937;
         }
 
-        /* Navbar */
+        /* NAVBAR */
+
         .navbar {
             background: #0b1f3a;
             color: white;
@@ -49,14 +54,16 @@
             color: #0b1f3a;
         }
 
-        /* Main */
+        /* MAIN */
+
         .container {
             max-width: 1100px;
             margin: 40px auto;
             padding: 0 20px;
         }
 
-        /* Welcome */
+        /* WELCOME */
+
         .welcome {
             margin-bottom: 25px;
         }
@@ -71,7 +78,8 @@
             font-size: 16px;
         }
 
-        /* Balance */
+        /* BALANCE */
+
         .balance-card {
             background: #0b1f3a;
             color: white;
@@ -97,13 +105,21 @@
             opacity: 0.85;
         }
 
-        /* Section title */
+        .currency-label {
+            font-size: 13px;
+            opacity: 0.7;
+            margin-top: 10px;
+        }
+
+        /* SECTION */
+
         .section-title {
             font-size: 22px;
             margin-bottom: 18px;
         }
 
-        /* Quick actions */
+        /* SERVICES */
+
         .services {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -149,7 +165,8 @@
             color: #6b7280;
         }
 
-        /* Account information */
+        /* ACCOUNT INFORMATION */
+
         .details-card {
             background: white;
             border-radius: 15px;
@@ -177,7 +194,8 @@
             word-break: break-word;
         }
 
-        /* Footer */
+        /* FOOTER */
+
         .footer {
             text-align: center;
             color: #6b7280;
@@ -185,7 +203,8 @@
             font-size: 14px;
         }
 
-        /* Mobile */
+        /* MOBILE */
+
         @media (max-width: 750px) {
 
             .navbar {
@@ -212,12 +231,15 @@
                 grid-template-columns: 1fr;
             }
         }
+
     </style>
+
 </head>
 
 <body>
 
-    <!-- Navigation -->
+    <!-- NAVBAR -->
+
     <div class="navbar">
 
         <div class="logo">
@@ -231,14 +253,24 @@
     </div>
 
 
-    <!-- Main Container -->
+    <!-- MAIN -->
+
     <div class="container">
 
-        <!-- Welcome -->
+        <!-- WELCOME -->
+
         <div class="welcome">
 
             <h1>
-                Welcome, <span th:text="${user.name}"></span> 👋
+
+                Welcome,
+
+                <span th:text="${user.name}">
+                    Customer
+                </span>
+
+                👋
+
             </h1>
 
             <p>
@@ -248,7 +280,8 @@
         </div>
 
 
-        <!-- Balance -->
+        <!-- BALANCE CARD -->
+
         <div class="balance-card">
 
             <div class="balance-title">
@@ -256,30 +289,63 @@
             </div>
 
             <div class="balance">
-                ₹<span th:text="${user.balance}"></span>
+
+                <span th:text="${user.currency}">
+                    INR
+                </span>
+
+                &nbsp;
+
+                <span th:text="${#numbers.formatDecimal(user.balance, 1, 2)}">
+                    0.00
+                </span>
+
             </div>
 
             <div class="account-type">
+
                 Account Type:
-                <span th:text="${user.accountType}"></span>
+
+                <span th:text="${user.accountType}">
+                    Savings
+                </span>
+
+            </div>
+
+            <div class="currency-label">
+
+                Account Currency:
+
+                <span th:text="${user.currency}">
+                    INR
+                </span>
+
             </div>
 
         </div>
 
 
-        <!-- Banking Services -->
+        <!-- QUICK ACTIONS -->
+
         <h2 class="section-title">
             Quick Actions
         </h2>
 
         <div class="services">
 
-            <!-- Balance -->
-            <form action="/balance" method="get" class="service-form">
 
-                <button type="submit" class="service-button">
+            <!-- CHECK BALANCE -->
 
-                    <span class="service-icon">💰</span>
+            <form action="/balance"
+                  method="get"
+                  class="service-form">
+
+                <button type="submit"
+                        class="service-button">
+
+                    <span class="service-icon">
+                        💰
+                    </span>
 
                     Check Balance
 
@@ -292,12 +358,18 @@
             </form>
 
 
-            <!-- Deposit -->
-            <form action="/deposit" method="get" class="service-form">
+            <!-- DEPOSIT -->
 
-                <button type="submit" class="service-button">
+            <form action="/deposit"
+                  method="get"
+                  class="service-form">
 
-                    <span class="service-icon">💵</span>
+                <button type="submit"
+                        class="service-button">
+
+                    <span class="service-icon">
+                        💵
+                    </span>
 
                     Deposit Money
 
@@ -310,12 +382,18 @@
             </form>
 
 
-            <!-- Withdraw -->
-            <form action="/withdraw" method="get" class="service-form">
+            <!-- WITHDRAW -->
 
-                <button type="submit" class="service-button">
+            <form action="/withdraw"
+                  method="get"
+                  class="service-form">
 
-                    <span class="service-icon">🏧</span>
+                <button type="submit"
+                        class="service-button">
+
+                    <span class="service-icon">
+                        🏧
+                    </span>
 
                     Withdraw Money
 
@@ -328,12 +406,18 @@
             </form>
 
 
-            <!-- Transfer -->
-            <form action="/transfer" method="get" class="service-form">
+            <!-- TRANSFER -->
 
-                <button type="submit" class="service-button">
+            <form action="/transfer"
+                  method="get"
+                  class="service-form">
 
-                    <span class="service-icon">🔄</span>
+                <button type="submit"
+                        class="service-button">
+
+                    <span class="service-icon">
+                        🔄
+                    </span>
 
                     Transfer Money
 
@@ -346,12 +430,18 @@
             </form>
 
 
-            <!-- Transactions -->
-            <form action="/transactions" method="get" class="service-form">
+            <!-- TRANSACTIONS -->
 
-                <button type="submit" class="service-button">
+            <form action="/transactions"
+                  method="get"
+                  class="service-form">
 
-                    <span class="service-icon">📋</span>
+                <button type="submit"
+                        class="service-button">
+
+                    <span class="service-icon">
+                        📋
+                    </span>
 
                     Transaction History
 
@@ -366,7 +456,7 @@
         </div>
 
 
-        <!-- Account Information -->
+        <!-- ACCOUNT INFORMATION -->
 
         <h2 class="section-title">
             Account Information
@@ -374,7 +464,9 @@
 
         <div class="details-card">
 
-            <!-- User ID -->
+
+            <!-- USER ID -->
+
             <div class="detail">
 
                 <div class="detail-label">
@@ -383,12 +475,14 @@
 
                 <div class="detail-value"
                      th:text="${user.id}">
+                    -
                 </div>
 
             </div>
 
 
-            <!-- Account Number -->
+            <!-- ACCOUNT NUMBER -->
+
             <div class="detail">
 
                 <div class="detail-label">
@@ -397,12 +491,14 @@
 
                 <div class="detail-value"
                      th:text="${user.accountNumber}">
+                    -
                 </div>
 
             </div>
 
 
-            <!-- Full Name -->
+            <!-- FULL NAME -->
+
             <div class="detail">
 
                 <div class="detail-label">
@@ -411,12 +507,14 @@
 
                 <div class="detail-value"
                      th:text="${user.name}">
+                    -
                 </div>
 
             </div>
 
 
-            <!-- Email -->
+            <!-- EMAIL -->
+
             <div class="detail">
 
                 <div class="detail-label">
@@ -425,12 +523,14 @@
 
                 <div class="detail-value"
                      th:text="${user.email}">
+                    -
                 </div>
 
             </div>
 
 
-            <!-- Contact Number -->
+            <!-- CONTACT -->
+
             <div class="detail">
 
                 <div class="detail-label">
@@ -439,12 +539,14 @@
 
                 <div class="detail-value"
                      th:text="${user.contactNumber}">
+                    -
                 </div>
 
             </div>
 
 
-            <!-- Account Type -->
+            <!-- ACCOUNT TYPE -->
+
             <div class="detail">
 
                 <div class="detail-label">
@@ -453,6 +555,48 @@
 
                 <div class="detail-value"
                      th:text="${user.accountType}">
+                    -
+                </div>
+
+            </div>
+
+
+            <!-- CURRENCY -->
+
+            <div class="detail">
+
+                <div class="detail-label">
+                    Account Currency
+                </div>
+
+                <div class="detail-value"
+                     th:text="${user.currency}">
+                    INR
+                </div>
+
+            </div>
+
+
+            <!-- BALANCE -->
+
+            <div class="detail">
+
+                <div class="detail-label">
+                    Current Balance
+                </div>
+
+                <div class="detail-value">
+
+                    <span th:text="${user.currency}">
+                        INR
+                    </span>
+
+                    &nbsp;
+
+                    <span th:text="${#numbers.formatDecimal(user.balance, 1, 2)}">
+                        0.00
+                    </span>
+
                 </div>
 
             </div>
@@ -462,11 +606,12 @@
     </div>
 
 
-    <!-- Footer -->
+    <!-- FOOTER -->
 
     <div class="footer">
 
-        SecureBank © 2026 | Secure Digital Banking
+        SecureBank © 2026 |
+        Secure Digital Banking
 
     </div>
 

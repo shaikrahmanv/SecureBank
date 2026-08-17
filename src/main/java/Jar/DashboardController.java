@@ -12,32 +12,26 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class DashboardController {
 
-	private UserDAO userDAO = new UserDAO();
+    private final UserDAO userDAO = new UserDAO();
 
-	@GetMapping("/dashboard")
-	public String showDashboard(HttpSession session, Model model) {
+    @GetMapping("/dashboard")
+    public String showDashboard(HttpSession session, Model model) {
 
-		System.out.println("========== DASHBOARD CONTROLLER CALLED ==========");
+        Integer userId = (Integer) session.getAttribute("userId");
 
-		Integer userId = (Integer) session.getAttribute("userId");
+        if (userId == null) {
+            return "redirect:/login";
+        }
 
-		System.out.println("Session User ID = " + userId);
+        User user = userDAO.getUserById(userId);
 
-		if (userId == null) {
-			return "redirect:/login";
-		}
+        if (user == null) {
+            session.invalidate();
+            return "redirect:/login";
+        }
 
-		User user = userDAO.getUserById(userId);
+        model.addAttribute("user", user);
 
-		if (user == null) {
-			session.invalidate();
-			return "redirect:/login";
-		}
-
-		System.out.println("User Account Number = " + user.getAccountNumber());
-
-		model.addAttribute("user", user);
-
-		return "dashboard";
-	}
+        return "dashboard";
+    }
 }

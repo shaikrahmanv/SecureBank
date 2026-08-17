@@ -10,14 +10,10 @@ public class User {
 	private String dateOfBirth;
 	private String address;
 	private String accountType;
-
-	// Account number
 	private String accountNumber;
-
-	// Account balance
 	private double balance;
+	private String currency = "INR";
 
-	// Constructor
 	public User(String name, String contactNumber, String email, String password, String dateOfBirth, String address,
 			String accountType) {
 
@@ -30,7 +26,6 @@ public class User {
 		this.accountType = accountType;
 	}
 
-	// User ID
 	public int getId() {
 		return id;
 	}
@@ -39,7 +34,6 @@ public class User {
 		this.id = id;
 	}
 
-	// Name
 	public String getName() {
 		return name;
 	}
@@ -48,7 +42,6 @@ public class User {
 		this.name = name;
 	}
 
-	// Contact Number
 	public String getContactNumber() {
 		return contactNumber;
 	}
@@ -57,7 +50,6 @@ public class User {
 		this.contactNumber = contactNumber;
 	}
 
-	// Email
 	public String getEmail() {
 		return email;
 	}
@@ -66,7 +58,6 @@ public class User {
 		this.email = email;
 	}
 
-	// Password
 	public String getPassword() {
 		return password;
 	}
@@ -75,7 +66,6 @@ public class User {
 		this.password = password;
 	}
 
-	// Date of Birth
 	public String getDateOfBirth() {
 		return dateOfBirth;
 	}
@@ -84,7 +74,6 @@ public class User {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	// Address
 	public String getAddress() {
 		return address;
 	}
@@ -93,7 +82,6 @@ public class User {
 		this.address = address;
 	}
 
-	// Account Type
 	public String getAccountType() {
 		return accountType;
 	}
@@ -102,7 +90,6 @@ public class User {
 		this.accountType = accountType;
 	}
 
-	// Account Number
 	public String getAccountNumber() {
 		return accountNumber;
 	}
@@ -111,12 +98,19 @@ public class User {
 		this.accountNumber = accountNumber;
 	}
 
-	// Balance
 	public double getBalance() {
 		return balance;
 	}
 
 	public void setBalance(double balance) {
 		this.balance = balance;
+	}
+
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
 	}
 }

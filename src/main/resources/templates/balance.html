@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -24,11 +24,27 @@
             background: #0b1f3a;
             color: white;
             padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .logo {
             font-size: 24px;
             font-weight: bold;
+        }
+
+        .logout {
+            color: white;
+            text-decoration: none;
+            padding: 9px 16px;
+            border: 1px solid white;
+            border-radius: 7px;
+        }
+
+        .logout:hover {
+            background: white;
+            color: #0b1f3a;
         }
 
         .container {
@@ -41,7 +57,7 @@
             background: white;
             padding: 40px;
             border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
             text-align: center;
         }
 
@@ -75,6 +91,13 @@
         .balance {
             font-size: 32px;
             font-weight: bold;
+            color: #0b1f3a;
+        }
+
+        .currency {
+            font-size: 20px;
+            color: #2563eb;
+            margin-bottom: 5px;
         }
 
         .back {
@@ -88,13 +111,32 @@
         .back:hover {
             text-decoration: underline;
         }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 30px auto;
+                padding: 15px;
+            }
+
+            .card {
+                padding: 30px 20px;
+            }
+        }
     </style>
 </head>
 
 <body>
 
     <div class="navbar">
-        <div class="logo">SecureBank</div>
+
+        <div class="logo">
+            SecureBank
+        </div>
+
+        <a href="/logout" class="logout">
+            Logout
+        </a>
+
     </div>
 
     <div class="container">
@@ -107,23 +149,42 @@
 
             <p class="holder">
                 Account Holder:
-                <strong th:text="${user.name}"></strong>
+                <strong th:text="${user.name}">Customer</strong>
             </p>
 
             <div class="balance-box">
+
+                <div class="balance-label">
+                    Account Currency
+                </div>
+
+                <div class="currency"
+                     th:text="${user.currency}">
+                    INR
+                </div>
 
                 <div class="balance-label">
                     Available Balance
                 </div>
 
                 <div class="balance">
-                    ₹<span th:text="${user.balance}"></span>
+
+                    <span th:text="${user.currency}">
+                        INR
+                    </span>
+
+                    <span>&nbsp;</span>
+
+                    <span th:text="${#numbers.formatDecimal(user.balance, 1, 2)}">
+                        0.00
+                    </span>
+
                 </div>
 
             </div>
 
-            <a href="/login" class="back">
-                ← Back to Login
+            <a href="/dashboard" class="back">
+                ← Back to Dashboard
             </a>
 
         </div>

@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class TransactionController {
 
-	private UserDAO userDAO = new UserDAO();
+	private final UserDAO userDAO = new UserDAO();
 
 	@GetMapping("/transactions")
 	public String showTransactions(HttpSession session, Model model) {

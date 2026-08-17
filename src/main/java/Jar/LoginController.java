@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class LoginController {
 
-	private LoginDAO loginDAO = new LoginDAO();
+	private final LoginDAO loginDAO = new LoginDAO();
 
 	@GetMapping("/login")
 	public String showLoginPage() {
@@ -28,16 +28,11 @@ public class LoginController {
 		User user = loginDAO.loginUser(email, password);
 
 		if (user != null) {
-
-			// Store logged-in user's ID in session
 			session.setAttribute("userId", user.getId());
-
-			// Send user to DashboardController
 			return "redirect:/dashboard";
 		}
 
-		model.addAttribute("error", "Invalid email or password");
-
+		model.addAttribute("error", "Invalid email or password.");
 		return "login";
 	}
 }

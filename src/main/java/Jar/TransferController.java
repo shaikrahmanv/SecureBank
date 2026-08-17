@@ -13,25 +13,23 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class TransferController {
 
-	private UserDAO userDAO = new UserDAO();
+	private final UserDAO userDAO = new UserDAO();
 
 	@GetMapping("/transfer")
-	public String showTransferPage(HttpSession session, Model model) {
+	public String showTransferPage(HttpSession session) {
 
 		Integer userId = (Integer) session.getAttribute("userId");
 
 		if (userId == null) {
 			return "redirect:/login";
 		}
-
-		model.addAttribute("userId", userId);
 
 		return "transfer";
 	}
 
 	@PostMapping("/transfer")
-	public String transferMoney(@RequestParam String receiverAccount, @RequestParam double amount,
-			HttpSession session) {
+	public String transferMoney(@RequestParam String receiverAccount, @RequestParam double amount, HttpSession session,
+			Model model) {
 
 		Integer userId = (Integer) session.getAttribute("userId");
 
@@ -39,12 +37,26 @@ public class TransferController {
 			return "redirect:/login";
 		}
 
-		boolean success = userDAO.transferMoney(userId, receiverAccount, amount);
+		if (receiverAccount == null || receiverAccount.trim().isEmpty()) {
+			model.addAttribute("error", "Please enter the receiver account number.");
+			return "transfer";
+		}
+
+		if (amount <= 0) {
+			model.addAttribute("error", "Please enter a valid transfer amount.");
+			return "transfer";
+		}
+
+		boolean success = userDAO.transferMoney(userId, receiverAccount.trim(), amount);
 
 		if (success) {
+			model.addAttribute("amount", amount);
+			model.addAttribute("receiverAccount", receiverAccount);
 			return "transfer-success";
 		}
 
-		return "transfer-failed";
+		model.addAttribute("error", "Transfer failed. Check the receiver account and your balance.");
+
+		return "transfer";
 	}
 }

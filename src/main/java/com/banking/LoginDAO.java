@@ -16,7 +16,7 @@ public class LoginDAO {
 				System.out.println("Unable to connect to database.");
 				return null;
 			}
-			// Find user by email
+
 			String sql = "SELECT * FROM users WHERE email = ?";
 
 			PreparedStatement statement = connection.prepareStatement(sql);
@@ -26,7 +26,6 @@ public class LoginDAO {
 			ResultSet result = statement.executeQuery();
 
 			if (!result.next()) {
-
 				System.out.println("Email not registered.");
 				return null;
 			}
@@ -38,17 +37,16 @@ public class LoginDAO {
 			// Check whether password is already hashed
 			if (storedPassword.contains(":")) {
 
-				// New secure password
 				passwordCorrect = PasswordUtil.verifyPassword(password, storedPassword);
 
 			} else {
 
-				// Old plain-text password
+				// Support old plain-text passwords
 				if (storedPassword.equals(password)) {
 
 					passwordCorrect = true;
 
-					// Convert old password to secure hash
+					// Upgrade old password to secure hash
 					String hashedPassword = PasswordUtil.hashPassword(password);
 
 					String updateSql = "UPDATE users SET password = ? WHERE id = ?";
@@ -65,18 +63,29 @@ public class LoginDAO {
 			}
 
 			if (!passwordCorrect) {
-
 				System.out.println("Incorrect password.");
 				return null;
 			}
 
-			// Login successful
+			// Create User object
 			User user = new User(result.getString("name"), result.getString("contact_number"),
 					result.getString("email"), result.getString("password"), result.getString("date_of_birth"),
 					result.getString("address"), result.getString("account_type"));
 
 			user.setId(result.getInt("id"));
 			user.setBalance(result.getDouble("balance"));
+
+			// Load currency from database
+			String currency = result.getString("currency");
+
+			if (currency != null && !currency.isEmpty()) {
+				user.setCurrency(currency);
+			} else {
+				user.setCurrency("INR");
+			}
+
+			// Load account number
+			user.setAccountNumber(result.getString("account_number"));
 
 			return user;
 

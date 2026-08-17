@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class BalanceController {
 
-	private UserDAO userDAO = new UserDAO();
+	private final UserDAO userDAO = new UserDAO();
 
 	@GetMapping("/balance")
 	public String showBalance(HttpSession session, Model model) {
@@ -25,9 +25,13 @@ public class BalanceController {
 
 		User user = userDAO.getUserById(userId);
 
+		if (user == null) {
+			session.invalidate();
+			return "redirect:/login";
+		}
+
 		model.addAttribute("user", user);
 
 		return "balance";
 	}
-
 }

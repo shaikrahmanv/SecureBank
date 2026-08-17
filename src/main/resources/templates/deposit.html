@@ -1,12 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Deposit Money - SecureBank</title>
 
     <style>
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -19,10 +24,15 @@
             color: #1f2937;
         }
 
+        /* NAVBAR */
+
         .navbar {
             background: #0b1f3a;
             color: white;
             padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .logo {
@@ -30,17 +40,34 @@
             font-weight: bold;
         }
 
+        .logout {
+            color: white;
+            text-decoration: none;
+            padding: 9px 16px;
+            border: 1px solid white;
+            border-radius: 7px;
+        }
+
+        .logout:hover {
+            background: white;
+            color: #0b1f3a;
+        }
+
+        /* CONTAINER */
+
         .container {
             max-width: 500px;
-            margin: 70px auto;
+            margin: 60px auto;
             padding: 20px;
         }
+
+        /* CARD */
 
         .card {
             background: white;
             padding: 35px;
             border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
         }
 
         .icon {
@@ -52,6 +79,7 @@
         h1 {
             text-align: center;
             margin-bottom: 10px;
+            color: #0b1f3a;
         }
 
         .description {
@@ -60,25 +88,52 @@
             margin-bottom: 30px;
         }
 
+        /* FORM */
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
         label {
             display: block;
             font-weight: bold;
             margin-bottom: 8px;
         }
 
-        input[type="number"] {
+        input[type="number"],
+        select {
             width: 100%;
             padding: 14px;
             border: 1px solid #d1d5db;
             border-radius: 8px;
-            font-size: 17px;
-            margin-bottom: 20px;
+            font-size: 16px;
+            background: white;
+            color: #1f2937;
         }
 
-        input[type="number"]:focus {
+        input[type="number"]:focus,
+        select:focus {
             outline: none;
             border-color: #0b1f3a;
+            box-shadow: 0 0 0 2px rgba(11, 31, 58, 0.08);
         }
+
+        /* CURRENCY INFO */
+
+        .currency-info {
+            background: #f4f7fb;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            color: #4b5563;
+            font-size: 14px;
+        }
+
+        .currency-info strong {
+            color: #0b1f3a;
+        }
+
+        /* BUTTON */
 
         button {
             width: 100%;
@@ -90,11 +145,15 @@
             font-size: 17px;
             font-weight: bold;
             cursor: pointer;
+            transition: 0.2s;
         }
 
         button:hover {
             background: #16385f;
+            transform: translateY(-1px);
         }
+
+        /* BACK */
 
         .back {
             display: block;
@@ -102,65 +161,177 @@
             margin-top: 20px;
             color: #0b1f3a;
             text-decoration: none;
+            font-weight: bold;
         }
 
         .back:hover {
             text-decoration: underline;
         }
+
+        /* MOBILE */
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .container {
+                margin: 30px auto;
+                padding: 15px;
+            }
+
+            .card {
+                padding: 30px 20px;
+            }
+
+        }
+
     </style>
+
 </head>
 
 <body>
 
+
+    <!-- NAVBAR -->
+
     <div class="navbar">
-        <div class="logo">SecureBank</div>
+
+        <div class="logo">
+            SecureBank
+        </div>
+
+        <a href="/logout"
+           class="logout">
+            Logout
+        </a>
+
     </div>
+
+
+    <!-- MAIN CONTAINER -->
 
     <div class="container">
 
         <div class="card">
 
-            <div class="icon">💵</div>
 
-            <h1>Deposit Money</h1>
+            <!-- ICON -->
+
+            <div class="icon">
+                💵
+            </div>
+
+
+            <!-- TITLE -->
+
+            <h1>
+                Deposit Money
+            </h1>
+
 
             <p class="description">
                 Add money securely to your bank account.
             </p>
 
-            <form action="/deposit" method="post">
+
+            <!-- CURRENCY -->
+
+            <div class="currency-info">
+
+                Account Currency:
+
+                <strong th:text="${user != null ? user.currency : 'INR'}">
+                    INR
+                </strong>
+
+            </div>
+
+
+            <!-- DEPOSIT FORM -->
+
+            <form action="/deposit"
+                  method="post">
+
+
+                <!-- USER ID -->
 
                 <input type="hidden"
                        name="userId"
                        th:value="${userId}">
 
-                <label for="amount">Enter Amount</label>
 
-                <input type="number"
-                       id="amount"
-                       name="amount"
-                       step="0.01"
-                       min="1"
-                       placeholder="Enter amount"
-                       required>
-					   
-					   <label for="method">Deposit Method</label>
+                <!-- AMOUNT -->
 
-					   <select id="method" name="method" required>
-					       <option value="">-- Select Method --</option>
-					       <option value="ATM">ATM</option>
-					       <option value="Branch">Bank Branch</option>
-					       <option value="Digital">Digital</option>
-					   </select>
+                <div class="form-group">
+
+                    <label for="amount">
+                        Enter Amount
+                    </label>
+
+                    <input type="number"
+                           id="amount"
+                           name="amount"
+                           step="0.01"
+                           min="1"
+                           placeholder="Enter amount"
+                           required>
+
+                </div>
+
+
+                <!-- METHOD -->
+
+                <div class="form-group">
+
+                    <label for="method">
+                        Deposit Method
+                    </label>
+
+                    <select id="method"
+                            name="method"
+                            required>
+
+                        <option value="">
+                            -- Select Method --
+                        </option>
+
+                        <option value="ATM">
+                            ATM
+                        </option>
+
+                        <option value="Branch">
+                            Bank Branch
+                        </option>
+
+                        <option value="Digital">
+                            Digital Banking
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- SUBMIT -->
 
                 <button type="submit">
+
                     Deposit Money
+
                 </button>
 
             </form>
 
-            <a href="/login" class="back">
-                ← Back to Login
+
+            <!-- BACK -->
+
+            <a href="/dashboard"
+               class="back">
+
+                ← Back to Dashboard
+
             </a>
 
         </div>
@@ -168,4 +339,5 @@
     </div>
 
 </body>
+
 </html>
