@@ -4,7 +4,7 @@ A Java Spring Boot based banking web application that provides secure and user-f
 
 ## 📌 Project Overview
 
-SecureBank is a full-stack banking application developed using Java, Spring Boot, HTML, CSS, JavaScript, and MySQL.
+SecureBank is a full-stack banking application developed using Java, Spring Boot, HTML, CSS, JavaScript, Thymeleaf, and MySQL.
 
 The application allows users to create accounts, securely log in, view account information, check balances, deposit and withdraw money, transfer funds, and view transaction history.
 
@@ -26,18 +26,21 @@ The application allows users to create accounts, securely log in, view account i
 ## 🛠️ Technologies Used
 
 ### Backend
+
 - Java
 - Spring Boot
 - JDBC
 - MySQL
 
 ### Frontend
+
 - HTML
 - CSS
 - JavaScript
 - Thymeleaf
 
 ### Development Tools
+
 - Eclipse
 - Git
 - GitHub
