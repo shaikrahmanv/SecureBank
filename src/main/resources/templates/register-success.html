@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Registration Successful | SecureBank</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #07111f;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Currency background */
+
+        .currencies {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            opacity: 0.10;
+            pointer-events: none;
+        }
+
+        .currency {
+            position: absolute;
+            font-size: 70px;
+            font-weight: bold;
+            animation: float 12s infinite ease-in-out;
+        }
+
+        .c1 { left: 5%; top: 10%; }
+        .c2 { left: 20%; top: 75%; }
+        .c3 { left: 35%; top: 8%; }
+        .c4 { left: 50%; top: 80%; }
+        .c5 { left: 68%; top: 12%; }
+        .c6 { left: 82%; top: 70%; }
+        .c7 { left: 90%; top: 25%; }
+        .c8 { left: 8%; top: 55%; }
+        .c9 { left: 43%; top: 45%; }
+        .c10 { left: 75%; top: 48%; }
+
+        @keyframes float {
+
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-25px) rotate(8deg);
+            }
+
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(
+                circle at center,
+                rgba(0, 0, 0, 0.10),
+                rgba(0, 0, 0, 0.80)
+            );
+        }
+
+        /* Success card */
+
+        .success-card {
+
+            position: relative;
+            z-index: 2;
+
+            width: 480px;
+
+            padding: 45px;
+
+            text-align: center;
+
+            background: rgba(255, 255, 255, 0.10);
+
+            border: 1px solid rgba(255, 255, 255, 0.20);
+
+            border-radius: 22px;
+
+            backdrop-filter: blur(15px);
+
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.45);
+        }
+
+        .logo {
+
+            font-size: 30px;
+
+            font-weight: bold;
+
+            margin-bottom: 25px;
+        }
+
+        .logo span {
+            color: #8ec5ff;
+        }
+
+        .success-icon {
+
+            width: 75px;
+            height: 75px;
+
+            margin: 0 auto 20px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: rgba(50, 200, 120, 0.15);
+
+            border: 2px solid rgba(100, 230, 160, 0.5);
+
+            font-size: 40px;
+        }
+
+        h1 {
+
+            font-size: 28px;
+
+            margin-bottom: 12px;
+        }
+
+        .welcome {
+
+            color: #c8d3df;
+
+            margin-bottom: 25px;
+
+            line-height: 1.6;
+        }
+
+        /* Account information */
+
+        .account-details {
+
+            margin: 20px 0;
+
+            padding: 20px;
+
+            background: rgba(0, 0, 0, 0.25);
+
+            border-radius: 12px;
+
+            text-align: left;
+        }
+
+        .detail {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 12px 0;
+
+            border-bottom: 1px solid rgba(255,255,255,0.10);
+        }
+
+        .detail:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            color: #aab5c1;
+            font-size: 14px;
+        }
+
+        .value {
+
+            color: white;
+
+            font-weight: bold;
+
+            font-size: 15px;
+        }
+
+        .account-number {
+
+            color: #8ec5ff;
+
+            letter-spacing: 1px;
+        }
+
+        .message {
+
+            color: #aab5c1;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+            margin: 20px 0;
+        }
+
+        /* Login button */
+
+        .button {
+
+            display: inline-block;
+
+            width: 100%;
+
+            padding: 13px;
+
+            background: #2477d4;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 10px;
+
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+        .button:hover {
+
+            background: #3288e5;
+
+            transform: translateY(-2px);
+        }
+
+        .security {
+
+            margin-top: 20px;
+
+            color: #8e9aa8;
+
+            font-size: 12px;
+        }
+
+        @media (max-width: 550px) {
+
+            .success-card {
+
+                width: 90%;
+
+                padding: 30px 25px;
+            }
+
+            .detail {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 5px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Currency background -->
+
+    <div class="currencies">
+
+        <div class="currency c1">₹</div>
+        <div class="currency c2">$</div>
+        <div class="currency c3">€</div>
+        <div class="currency c4">£</div>
+        <div class="currency c5">¥</div>
+        <div class="currency c6">₩</div>
+        <div class="currency c7">₽</div>
+        <div class="currency c8">₺</div>
+        <div class="currency c9">₫</div>
+        <div class="currency c10">₦</div>
+
+    </div>
+
+
+    <!-- Success card -->
+
+    <div class="success-card">
+
+        <div class="logo">
+            Secure<span>Bank</span>
+        </div>
+
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+
+        <h1>
+            Registration Successful!
+        </h1>
+
+
+        <p class="welcome">
+
+            Welcome to SecureBank,
+
+            <strong th:text="${name}">
+                Customer
+            </strong>!
+
+            Your account has been created successfully.
+
+        </p>
+
+
+        <!-- Account information -->
+
+        <div class="account-details">
+
+            <div class="detail">
+
+                <span class="label">
+                    User ID
+                </span>
+
+                <span
+                    class="value"
+                    th:text="${userId}">
+                    --
+                </span>
+
+            </div>
+
+
+            <div class="detail">
+
+                <span class="label">
+                    Account Number
+                </span>
+
+                <span
+                    class="value account-number"
+                    th:text="${accountNumber}">
+                    --
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <p class="message">
+
+            Please keep your User ID and Account Number safe.
+            You can now use your registered email and password
+            to login to SecureBank.
+
+        </p>
+
+
+        <a
+            href="/login"
+            class="button">
+
+            Go to SecureBank Login
+
+        </a>
+
+
+        <div class="security">
+
+            🔒 Your banking information is protected
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

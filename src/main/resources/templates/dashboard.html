@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SecureBank - Dashboard</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: #0b1f3a;
+            color: white;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .logout {
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border: 1px solid white;
+            border-radius: 7px;
+            transition: 0.2s;
+        }
+
+        .logout:hover {
+            background: white;
+            color: #0b1f3a;
+        }
+
+        /* Main */
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* Welcome */
+        .welcome {
+            margin-bottom: 25px;
+        }
+
+        .welcome h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .welcome p {
+            color: #6b7280;
+            font-size: 16px;
+        }
+
+        /* Balance */
+        .balance-card {
+            background: #0b1f3a;
+            color: white;
+            border-radius: 18px;
+            padding: 32px;
+            margin-bottom: 35px;
+            box-shadow: 0 8px 25px rgba(11, 31, 58, 0.18);
+        }
+
+        .balance-title {
+            font-size: 15px;
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+
+        .balance {
+            font-size: 40px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .account-type {
+            opacity: 0.85;
+        }
+
+        /* Section title */
+        .section-title {
+            font-size: 22px;
+            margin-bottom: 18px;
+        }
+
+        /* Quick actions */
+        .services {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 35px;
+        }
+
+        .service-form {
+            margin: 0;
+        }
+
+        .service-button {
+            width: 100%;
+            min-height: 135px;
+            background: white;
+            border: none;
+            border-radius: 15px;
+            padding: 25px 15px;
+            cursor: pointer;
+            font-size: 17px;
+            font-weight: bold;
+            color: #1f2937;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+            transition: 0.25s;
+        }
+
+        .service-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 9px 22px rgba(0, 0, 0, 0.12);
+        }
+
+        .service-icon {
+            display: block;
+            font-size: 35px;
+            margin-bottom: 12px;
+        }
+
+        .service-description {
+            display: block;
+            margin-top: 7px;
+            font-size: 13px;
+            font-weight: normal;
+            color: #6b7280;
+        }
+
+        /* Account information */
+        .details-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+        }
+
+        .detail {
+            padding: 15px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .detail-label {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .detail-value {
+            font-size: 17px;
+            font-weight: bold;
+            word-break: break-word;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            color: #6b7280;
+            padding: 40px 20px;
+            font-size: 14px;
+        }
+
+        /* Mobile */
+        @media (max-width: 750px) {
+
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .container {
+                margin-top: 25px;
+            }
+
+            .welcome h1 {
+                font-size: 25px;
+            }
+
+            .balance {
+                font-size: 32px;
+            }
+
+            .services {
+                grid-template-columns: 1fr;
+            }
+
+            .details-card {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <div class="navbar">
+
+        <div class="logo">
+            SecureBank
+        </div>
+
+        <a href="/logout" class="logout">
+            Logout
+        </a>
+
+    </div>
+
+
+    <!-- Main Container -->
+    <div class="container">
+
+        <!-- Welcome -->
+        <div class="welcome">
+
+            <h1>
+                Welcome, <span th:text="${user.name}"></span> 👋
+            </h1>
+
+            <p>
+                Manage your account securely from your banking dashboard.
+            </p>
+
+        </div>
+
+
+        <!-- Balance -->
+        <div class="balance-card">
+
+            <div class="balance-title">
+                Available Balance
+            </div>
+
+            <div class="balance">
+                ₹<span th:text="${user.balance}"></span>
+            </div>
+
+            <div class="account-type">
+                Account Type:
+                <span th:text="${user.accountType}"></span>
+            </div>
+
+        </div>
+
+
+        <!-- Banking Services -->
+        <h2 class="section-title">
+            Quick Actions
+        </h2>
+
+        <div class="services">
+
+            <!-- Balance -->
+            <form action="/balance" method="get" class="service-form">
+
+                <button type="submit" class="service-button">
+
+                    <span class="service-icon">💰</span>
+
+                    Check Balance
+
+                    <span class="service-description">
+                        View your current balance
+                    </span>
+
+                </button>
+
+            </form>
+
+
+            <!-- Deposit -->
+            <form action="/deposit" method="get" class="service-form">
+
+                <button type="submit" class="service-button">
+
+                    <span class="service-icon">💵</span>
+
+                    Deposit Money
+
+                    <span class="service-description">
+                        Add money to your account
+                    </span>
+
+                </button>
+
+            </form>
+
+
+            <!-- Withdraw -->
+            <form action="/withdraw" method="get" class="service-form">
+
+                <button type="submit" class="service-button">
+
+                    <span class="service-icon">🏧</span>
+
+                    Withdraw Money
+
+                    <span class="service-description">
+                        Withdraw money securely
+                    </span>
+
+                </button>
+
+            </form>
+
+
+            <!-- Transfer -->
+            <form action="/transfer" method="get" class="service-form">
+
+                <button type="submit" class="service-button">
+
+                    <span class="service-icon">🔄</span>
+
+                    Transfer Money
+
+                    <span class="service-description">
+                        Send money to another account
+                    </span>
+
+                </button>
+
+            </form>
+
+
+            <!-- Transactions -->
+            <form action="/transactions" method="get" class="service-form">
+
+                <button type="submit" class="service-button">
+
+                    <span class="service-icon">📋</span>
+
+                    Transaction History
+
+                    <span class="service-description">
+                        View your transactions
+                    </span>
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- Account Information -->
+
+        <h2 class="section-title">
+            Account Information
+        </h2>
+
+        <div class="details-card">
+
+            <!-- User ID -->
+            <div class="detail">
+
+                <div class="detail-label">
+                    User ID
+                </div>
+
+                <div class="detail-value"
+                     th:text="${user.id}">
+                </div>
+
+            </div>
+
+
+            <!-- Account Number -->
+            <div class="detail">
+
+                <div class="detail-label">
+                    Account Number
+                </div>
+
+                <div class="detail-value"
+                     th:text="${user.accountNumber}">
+                </div>
+
+            </div>
+
+
+            <!-- Full Name -->
+            <div class="detail">
+
+                <div class="detail-label">
+                    Full Name
+                </div>
+
+                <div class="detail-value"
+                     th:text="${user.name}">
+                </div>
+
+            </div>
+
+
+            <!-- Email -->
+            <div class="detail">
+
+                <div class="detail-label">
+                    Email
+                </div>
+
+                <div class="detail-value"
+                     th:text="${user.email}">
+                </div>
+
+            </div>
+
+
+            <!-- Contact Number -->
+            <div class="detail">
+
+                <div class="detail-label">
+                    Contact Number
+                </div>
+
+                <div class="detail-value"
+                     th:text="${user.contactNumber}">
+                </div>
+
+            </div>
+
+
+            <!-- Account Type -->
+            <div class="detail">
+
+                <div class="detail-label">
+                    Account Type
+                </div>
+
+                <div class="detail-value"
+                     th:text="${user.accountType}">
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Footer -->
+
+    <div class="footer">
+
+        SecureBank © 2026 | Secure Digital Banking
+
+    </div>
+
+</body>
+
+</html>

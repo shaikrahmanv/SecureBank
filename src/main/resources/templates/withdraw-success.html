@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Withdrawal Successful | SecureBank</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #07111f;
+            color: white;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 20px;
+            padding: 45px 35px;
+            text-align: center;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+        }
+
+        .icon {
+            width: 75px;
+            height: 75px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: #2477d4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 38px;
+        }
+
+        h1 {
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+
+        .highlight {
+            color: #8ec5ff;
+        }
+
+        .message {
+            color: #c8d3df;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 13px 28px;
+            background: #2477d4;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .button:hover {
+            background: #3288e5;
+            transform: translateY(-2px);
+        }
+
+        .brand {
+            margin-top: 25px;
+            color: #9eacba;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="card">
+
+            <div class="icon">
+                ✓
+            </div>
+
+            <h1>
+                Withdrawal <span class="highlight">Successful!</span>
+            </h1>
+
+            <p class="message">
+                Your money has been withdrawn successfully.
+                Your transaction has been recorded securely.
+            </p>
+
+            <a href="/dashboard" class="button">
+                Back to Dashboard
+            </a>
+
+            <div class="brand">
+                🔒 SecureBank | Secure Digital Banking
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

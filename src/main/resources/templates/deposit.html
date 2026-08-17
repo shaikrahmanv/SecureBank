@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Deposit Money - SecureBank</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        .navbar {
+            background: #0b1f3a;
+            color: white;
+            padding: 18px 40px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 70px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .icon {
+            font-size: 45px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            text-align: center;
+            color: #6b7280;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 17px;
+            margin-bottom: 20px;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #0b1f3a;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #0b1f3a;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #16385f;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #0b1f3a;
+            text-decoration: none;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <div class="logo">SecureBank</div>
+    </div>
+
+    <div class="container">
+
+        <div class="card">
+
+            <div class="icon">💵</div>
+
+            <h1>Deposit Money</h1>
+
+            <p class="description">
+                Add money securely to your bank account.
+            </p>
+
+            <form action="/deposit" method="post">
+
+                <input type="hidden"
+                       name="userId"
+                       th:value="${userId}">
+
+                <label for="amount">Enter Amount</label>
+
+                <input type="number"
+                       id="amount"
+                       name="amount"
+                       step="0.01"
+                       min="1"
+                       placeholder="Enter amount"
+                       required>
+					   
+					   <label for="method">Deposit Method</label>
+
+					   <select id="method" name="method" required>
+					       <option value="">-- Select Method --</option>
+					       <option value="ATM">ATM</option>
+					       <option value="Branch">Bank Branch</option>
+					       <option value="Digital">Digital</option>
+					   </select>
+
+                <button type="submit">
+                    Deposit Money
+                </button>
+
+            </form>
+
+            <a href="/login" class="back">
+                ← Back to Login
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
